@@ -7,8 +7,6 @@ import Layout from './Layout.vue'
     <video src="" autoplay></video>
   </div>
   <Layout>
-    asdsad
-
   </Layout>
 </template>
 
@@ -21,7 +19,7 @@ import Layout from './Layout.vue'
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 65%);
-  backdrop-filter: blur(3px);
+  /* backdrop-filter: blur(3px); */
   mix-blend-mode: overlay;
   z-index: -999;
 }

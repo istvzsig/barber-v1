@@ -7,7 +7,6 @@
     </div>
     <NavgiationBar />
 </template>
-
 <style scoped>
 #content {
     color: ivory !important;
