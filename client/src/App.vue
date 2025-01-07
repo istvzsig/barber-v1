@@ -6,9 +6,11 @@ import NavigationBar from './features/navigation/index.vue'
   <header>
     <div class="wrapper">
       <NavigationBar />
-      <img
+      <div class="logo">
+        <img
         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.HCnbv2ctB5tp2F9IzOe3FgHaE8%26pid%3DApi&f=1&ipt=7f84f751766b512848974bcd896025bef7360370a31453aed421da3ec169714b&ipo=images"
         alt="">
+      </div>
     </div>
   </header>
 

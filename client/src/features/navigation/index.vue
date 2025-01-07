@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { onPointerDown, onPointerUp } from './service.js'
+import { handlePointerDown, handlePointerUp } from './service.js'
 import './index.css'
 import router from '../../router/index.js'
 const routes = router.getRoutes()
@@ -13,6 +13,6 @@ const routes = router.getRoutes()
                 {{ route.name[0].toUpperCase() + [...route.name].splice(1).join('') }}
             </RouterLink>
         </div>
-        <button @pointerdown="onPointerDown" @pointerup="onPointerUp" class="booking-button">BOOK</button>
+        <button @pointerdown="handlePointerDown" @pointerup="handlePointerUp" class="booking-button">BOOK</button>
     </nav>
 </template>

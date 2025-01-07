@@ -1,10 +1,10 @@
 function setButtonState(button, state) {
     button.dataset["state"] = state;
 }
-function onPointerDown(e) {
+function handlePointerDown(e) {
     setButtonState(e.target, "clicked");
 }
-function onPointerUp(e) {
+function handlePointerUp(e) {
     if (e.target.dataset["state"] = "clicked") {
         e.target.addEventListener("animationend", _ => {
             setButtonState(e.target, "")
@@ -14,6 +14,6 @@ function onPointerUp(e) {
 
 export {
     setButtonState,
-    onPointerDown,
-    onPointerUp
+    handlePointerDown,
+    handlePointerUp
 }
