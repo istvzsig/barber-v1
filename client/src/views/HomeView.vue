@@ -4,7 +4,7 @@ import Layout from './Layout.vue'
 
 <template>
   <div class="demo-video">
-    <video src="" autoplay></video>
+    <!-- <video src="" autoplay></video> -->
   </div>
   <Layout>
   </Layout>
