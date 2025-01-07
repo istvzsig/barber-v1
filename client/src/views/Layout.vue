@@ -1,10 +1,15 @@
 <script setup>
-defineProps({
-    content: String,
-})
 </script>
 <template>
     <NavgiationBar />
-    {{ content }}
+    <div id="content">
+        Content Here
+    </div>
     <NavgiationBar />
 </template>
+
+<style scoped>
+#content {
+    color: ivory !important;
+}
+</style>
