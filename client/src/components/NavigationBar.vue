@@ -1,7 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import router from '../router/index.js'
-
 const routes = router.getRoutes()
 </script>
 
