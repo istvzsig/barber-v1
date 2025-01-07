@@ -22,7 +22,7 @@ app.post('/api/bookings', async (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+const SERVER_PORT = process.env.SERVER_PORT || 3000;
+app.listen(SERVER_PORT, () => {
+    console.log(`Server running on http://localhost:${SERVER_PORT}`);
 });
