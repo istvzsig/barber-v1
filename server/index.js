@@ -5,7 +5,7 @@ const cron = require('node-cron');
 
 const app = express();
 const PORT = 3000;
-const BOOKINGS_FILE = path.join(__dirname, 'bookings.json');
+const BOOKINGS_FILE = path.join(__dirname, '../db/bookings.json');
 
 app.use(express.json());
 
