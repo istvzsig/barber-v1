@@ -11,7 +11,6 @@ function handlePointerUp(e) {
         });
     }
 }
-
 export {
     setButtonState,
     handlePointerDown,
