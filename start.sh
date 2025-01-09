@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Start the frontend
-cd ./client/
-npm run dev &
+# Load logging.sh from github
+source functions.sh
 
 # Start the backend
-cd ../server/
-node index.js &
+start_backend
+# Start the frontend
+# start_frontend
