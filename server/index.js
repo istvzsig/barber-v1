@@ -16,7 +16,7 @@ const WORKING_HOURS = {
 app.use(express.json());
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: 'http://localhost:5555',
         methods: ['GET', 'POST', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin'],
     })
@@ -55,6 +55,29 @@ app.get('/bookings/date/:date', (req, res) => {
     res.json(filteredBookings);
 });
 
+// Modify a booking
+app.put('/bookings/:id', (req, res) => {
+    const { id } = req.params;
+    const { name, time, hour } = req.body;
+
+    if (!name || !time || !hour) {
+        return res.status(400).json({ error: 'Name, time, and hour are required' });
+    }
+
+    let bookings = JSON.parse(readFileSync(BOOKINGS_FILE));
+    const bookingIndex = bookings.findIndex((booking) => booking.id === parseInt(id));
+    if (bookingIndex === -1) {
+        return res.status(404).json({ error: 'Booking not found' });
+    }
+
+    // Update booking details
+    bookings[bookingIndex] = { ...bookings[bookingIndex], name, time, hour };
+    writeFileSync(BOOKINGS_FILE, JSON.stringify(bookings, null, 2));
+
+    res.json(bookings[bookingIndex]);
+});
+
+
 // Create a new booking
 app.post('/booking', (req, res) => {
     const { name, time, hour } = req.body;
@@ -82,6 +105,19 @@ app.delete('/bookings/:id', (req, res) => {
     writeFileSync(BOOKINGS_FILE, JSON.stringify(bookings, null, 2));
     res.json({ message: 'Booking deleted' });
 });
+
+app.get('/api/available-hours', (req, res) => {
+    const { date } = req.query;
+    if (!date) {
+        return res.status(400).json({ error: 'Date is required' });
+    }
+
+    // You can implement logic here to check available hours based on the date
+    const availableHours = ["08:00", "09:00", "10:00", "11:00", "12:00"]; // Example hours
+
+    res.json({ hours: availableHours });
+});
+
 
 // Auto-delete expired bookings (runs every minute)
 schedule('* * * * *', () => {
