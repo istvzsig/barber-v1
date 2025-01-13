@@ -15,6 +15,11 @@ SERVER_PORT=3000 # Get the port from .env file
 SERVER_PID=$(lsof -t -i:$SERVER_PORT)
 SERVER_FILE=server/index.js
 
+# Client
+CLIENT_PORT=5555 # Get the port from .env file
+CLIENT_PID=$(lsof -t -i:$CLIENT_PORT)
+CLIENT_PATH=client/
+
 function log() {
     mkdir -p logs
     local current_datetime=$(date '+%Y-%m-%d_%H-%M-%S')
@@ -42,27 +47,37 @@ function log_client() {
 function kill_server_process() {
     if [[ -n $SERVER_PID ]]; then
         kill -9 $SERVER_PID
-        log_server $COLOR_ERROR "Process with PID: $SERVER_PID force killed." $LOG_FILE
+        # log_server $COLOR_ERROR "Process with PID: $SERVER_PID force killed." $LOG_FILE
         sleep 1
     fi
 }
 
-function start_backend() {
-    mkdir -p temp
-    set -x
-    kill_server_process
-    local TEMP_FILE=$(mktemp "/temp.XXXXXX")
-    node "$SERVER_FILE" &>"$TEMP_FILE" &
-    local pid=$!
-    wait $pid
-    local node_output=$(cat "$TEMP_FILE")
-    log_server $COLOR_SUCCESS $node_output
+function kill_client_process() {
+    if [[ -n $CLIENT_PORT ]]; then
+        kill -9 $CLIENT_PORT
+        # log_server $COLOR_ERROR "Process with PID: $CLIENT_PORT force killed." $LOG_FILE
+        sleep 1
+    fi
 }
 
-function start_frontend {
+function start_server() {
+    # mkdir -p temp
+    # set -x
+    # kill_server_process
+    # local TEMP_FILE=$(mktemp "/temp.XXXXXX")
+    # node "$SERVER_FILE" &>"$TEMP_FILE" &
+    # local pid=$!
+    # wait $pid
+    # local node_output=$(cat "$TEMP_FILE")
+    # log_server $COLOR_SUCCESS $node_output
+    kill_server_process
+    node server/index.js
+}
+
+function start_client {
     # log_client $COLOR_SUCCESS "Client started..."
-    cd client/
-    npm run dev &
+    kill_client_process
+    npm --prefix $CLIENT_PATH run dev
 }
 
 function start_server_test() {
