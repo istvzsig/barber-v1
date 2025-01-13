@@ -1,17 +1,21 @@
 <template>
     <div>
+        <div class="bg-image"></div>
         <!-- Dynamic Heading -->
         <form id="bookingForm" @submit.prevent="submitForm">
+            <h1>Welcome to Broo's Barber v1</h1>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi optio, quibusdam magnam provident
+                beatae sunt laborum eius. Nobis repudiandae quam omnis, minus dolor cumque numquam sequi eum. Quasi,
+                minima sed!</p>
             <h1>{{ stepHeading }}</h1>
             <div v-if="step === 1">
-                <label for="name" aria-required="true">Name:</label>
-                <input type="text" name="name" id="name" v-model="formData.name" required> <br>
+                <input placeholder="Ird be a neved..." type="text" name="name" id="name" v-model="formData.name"
+                    required> <br>
                 <button v-if="formData.name" @click.prevent="goToNextStep">Next</button>
             </div>
 
             <!-- Show Date Picker only if Name is filled -->
             <div v-if="formData.name && step === 2">
-                <label for="time">Reserved Date:</label>
                 <input type="date" name="time" id="time" v-model="formData.time" required :min="minDate" :max="maxDate"
                     @change="onDateChange" /> <br>
                 <button v-if="formData.time" @click.prevent="goToNextStep">Next</button>
@@ -20,7 +24,6 @@
 
             <!-- Hour Picker Step -->
             <div v-if="formData.name && step === 3">
-                <label for="hour">Reserved Hour:</label>
                 <input type="time" name="hour" id="hour" v-model="formData.hour" required :min="minHour"
                     :max="maxHour" /> <br>
                 <button v-if="formData.hour" @click.prevent="goToNextStep">Next</button>
@@ -30,7 +33,6 @@
 
             <!-- Confirmation Step -->
             <div v-if="formData.name && step === 4">
-                <p>Confirm your booking:</p>
                 <p>Name: {{ formData.name }}</p>
                 <p>Date: {{ formData.time }}</p>
                 <p>Hour: {{ formData.hour }}</p> <!-- Format the hour properly -->
@@ -80,9 +82,13 @@ export default {
                     return;
                 }
                 const response = await fetch(`/api/available-hours?date=${this.formData.time}`);
+
+                // Check for a non-200 response
                 if (!response.ok) {
                     throw new Error(`Failed to fetch available hours: ${response.statusText}`);
                 }
+
+                // Attempt to parse JSON
                 const data = await response.json();
                 console.log("Available hours fetched:", data.hours);
                 this.availableHours = data.hours;
@@ -90,7 +96,8 @@ export default {
                 console.error("Error in onDateChange:", error);
                 this.availableHours = []; // Reset on error
             }
-        },
+        }
+        ,
         goToNextStep() {
             if (this.step <= 4) this.step++;
         },
@@ -109,8 +116,8 @@ export default {
                 body: JSON.stringify(this.formData),
             });
             if (response.ok) {
-                alert('Booking successful!');
                 this.resetForm();
+                setTimeout(() => window.location.href = "/", 2000)
             } else {
                 alert('Error submitting booking. Please try again.');
             }
@@ -121,12 +128,16 @@ export default {
 
 <style scoped>
 /* Styles for calendar */
+* {
+    color: ivory;
+}
+
 .calendar-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
-    background: white;
+    color: ivory;
     border: 1px solid #ccc;
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -161,6 +172,20 @@ export default {
     color: white;
 }
 
+h1 {
+    font-weight: 600;
+    font-family: "Frank Ruhl Libre", serif;
+    letter-spacing: 2px;
+    font-size: 10vw;
+    line-height: 1;
+    margin: 1rem 0;
+}
+
+h1,
+p {
+    text-align: center;
+}
+
 button {
     background-color: #007bff;
     color: white;
@@ -180,12 +205,39 @@ select {
     font-size: 1em;
 }
 
+input,
+label {
+    font-family: "Frank Ruhl Libre", serif;
+    letter-spacing: 2px;
+}
+
 input {
+    color-scheme: light;
+    font-size: 24px;
     padding: 1rem;
     margin: 1rem;
-    border: 1px solid #eee;
     width: 100%;
     max-width: 400px;
+    box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A;
+    transition: 420ms ease-in-out;
+    background: transparent !important;
+}
+
+input:is(:-webkit-autofill, :autofill) {
+    background: transparent !important;
+}
+
+input:focus {
+    box-shadow: inset 1px 1px 0 ivory, inset -1px -1px 0 ivory;
+    backdrop-filter: blur(15px);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 240, 0.422);
+}
+
+input::cue-region {
+    color: white;
 }
 
 button {
@@ -194,5 +246,50 @@ button {
 
 button {
     background-color: red;
+}
+
+.bg-image {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: url("../assets/barber-shop-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    z-index: -100;
+    animation: zoom 80000ms ease forwards infinite;
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.2);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    75% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bg-image::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(31, 31, 31, 0.772);
+    backdrop-filter: blur(3px);
 }
 </style>
