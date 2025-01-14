@@ -10,24 +10,26 @@
             <h1>{{ stepHeading }}</h1>
             <div v-if="step === 1">
                 <input placeholder="Ird be a neved..." type="text" name="name" id="name" v-model="formData.name"
-                    required> <br>
-                <button v-if="formData.name" @click.prevent="goToNextStep">Next</button>
+                    required>
+                <br>
+                <button :disabled="!formData.name" @click.prevent="goToNextStep">Next</button>
             </div>
 
             <!-- Show Date Picker only if Name is filled -->
             <div v-if="formData.name && step === 2">
                 <input type="date" name="time" id="time" v-model="formData.time" required :min="minDate" :max="maxDate"
-                    @change="onDateChange" /> <br>
-                <button v-if="formData.time" @click.prevent="goToNextStep">Next</button>
+                    @change="onDateChange" />
+                <br>
                 <button @click.prevent="resetForm">Reset</button> <!-- Reset the form -->
+                <button :disabled="!formData.time" @click.prevent="goToNextStep">Tovabb</button>
             </div>
 
             <!-- Hour Picker Step -->
             <div v-if="formData.name && step === 3">
                 <input type="time" name="hour" id="hour" v-model="formData.hour" required :min="minHour"
                     :max="maxHour" /> <br>
-                <button v-if="formData.hour" @click.prevent="goToNextStep">Next</button>
-                <button @click.prevent="goToPreviousStep">Back</button> <!-- Go back to the previous step -->
+                <button :disabled="!formData.hour" @click.prevent="goToNextStep">Next</button>
+                <button @click.prevent="goToPreviousStep">Visszalepes</button> <!-- Go back to the previous step -->
                 <button @click.prevent="resetForm">Reset</button> <!-- Reset the form -->
             </div>
 

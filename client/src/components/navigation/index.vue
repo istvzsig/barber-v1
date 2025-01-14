@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { handlePointerDown, handlePointerUp } from './service.js'
 import router from '../../router/index.js'
 const routes = router.getRoutes()

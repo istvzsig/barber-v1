@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Admin Booking Management</h1>
+        <h1>Foglalas Kezelo</h1>
         <div v-if="bookings.length === 0">
             <p>No bookings available.</p>
         </div>
@@ -96,7 +96,7 @@ export default {
         // Submit the edited booking
         async submitEditBooking() {
             try {
-                const response = await fetch(`http://localhost:5555/bookings/${this.editingBooking.id}`, {
+                const response = await fetch(`http://localhost:3000/bookings/${this.editingBooking.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(this.editingBooking),

@@ -1,25 +1,18 @@
-import js from '@eslint/js'
-import pluginVue from 'eslint-plugin-vue'
-import pluginVitest from '@vitest/eslint-plugin'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import pluginVue from 'eslint-plugin-vue';
 
 export default [
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{js,mjs,jsx,vue}'],
+    // Base config for Vue
+    ...pluginVue.configs['essential'],
+    files: ['**/*.vue'],
+    rules: {
+      'vue/max-attributes-per-line': [
+        'error',
+        {
+          singleline: 3, // maximum 3 attributes per line in a single-line element
+          multiline: { max: 1 }, // maximum 1 attribute per line in a multiline element
+        },
+      ],
+    },
   },
-
-  {
-    name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
-  },
-
-  js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
-  
-  {
-    ...pluginVitest.configs.recommended,
-    files: ['src/**/__tests__/*'],
-  },
-  skipFormatting,
-]
+];

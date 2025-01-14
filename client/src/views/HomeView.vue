@@ -5,9 +5,8 @@ import VideoBackground from '../components/video-background/index.vue'
 <template>
   <div class="container">
     <VideoBackground />
-    <h1>Nálunk a hagyomány és a modern stílus találkozik</h1>
-    <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-      standard dummy text ever since...</h4>
+    <h1>Nálunk a hagyomány és a rusztikus stílus találkozik</h1>
+    <h1>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h1>
     <div class="cta-container">
       <a class="booking-button" href="/booking">Időpont <br> foglalás</a>
       <img src="../assets/scissors.svg" alt="">
