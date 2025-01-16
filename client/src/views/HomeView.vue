@@ -1,5 +1,8 @@
 <script setup>
-import VideoBackground from '../components/video-background/index.vue'
+import VideoBackground from '../components/video-background/index.vue';
+import LocationMap from '../components/map/index.vue';
+import Portfolio from '../components/portfolio/index.vue';
+console.log(LocationMap)
 </script>
 
 <template>
@@ -9,10 +12,13 @@ import VideoBackground from '../components/video-background/index.vue'
     <div class="cta-container">
       <a class="booking-button" href="/booking">Időpont <br> foglalás</a>
       <img src="../assets/scissors.svg" alt="">
-      <a class="telephone-button" href="tel:+36123456789">Telefon</a>
-      <p class="copyright">© 2025 Classic Cuts Barber Shop. Minden jog fenntartva.Stílus és precizitás – generációkon
-        át.</p>
+      <a :disabled="true" class="telephone-button" href="tel:+36705382789">+36 70 53 82 789</a>
     </div>
+    <LocationMap />
+    <img class="scissors-big" src="../assets/scissors.svg" alt="">
+    <Portfolio />
+    <p class="copyright">© 2025 Classic Cuts Barber Shop. Minden jog fenntartva.Stílus és precizitás – generációkon át.
+    </p>
   </div>
 </template>
 
@@ -24,6 +30,7 @@ import VideoBackground from '../components/video-background/index.vue'
   font-family: "Frank Ruhl Libre", serif;
   font-optical-sizing: auto;
   font-style: normal;
+  padding-top: 100px;
 }
 
 h1 {
@@ -44,9 +51,12 @@ h4 {
 }
 
 p.copyright {
-  font-size: 8pt;
+  text-align: center;
+  font-size: 10pt;
   color: ivory;
-  opacity: 50%;
+  opacity: 100%;
+  mix-blend-mode: overlay;
+
 }
 
 .cta-container {
@@ -69,17 +79,30 @@ p.copyright {
   text-transform: uppercase;
 }
 
-.cta-container .booking-button {
-  color: #E6BE8A;
-  box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A;
-}
-
-.cta-container .telephone-button {
-  box-shadow: inset 1px 1px 0 ivory, inset -1px -1px 0 ivory;
-}
-
 .buttons {
   place-items: center;
   list-style: none;
+}
+
+.booking-button {
+  color: #E6BE8A;
+  box-shadow: inset 1px 1px 0 ivory, inset -1px -1px 0 ivory;
+}
+
+.telephone-button {
+  mix-blend-mode: normal;
+  box-shadow: inset 1px 1px 0 ivory, inset -1px -1px 0 ivory !important;
+}
+
+.telephone-button:hover {
+  /* color: #E6BE8A; */
+  /* box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A; */
+}
+
+.scissors-big {
+  width: 150px;
+  rotate: -90deg;
+  margin: 2rem auto;
+  mix-blend-mode: overlay;
 }
 </style>
