@@ -6,7 +6,6 @@ import VideoBackground from '../components/video-background/index.vue'
   <div class="container">
     <VideoBackground />
     <h1>Nálunk a hagyomány és a rusztikus stílus találkozik</h1>
-    <h1>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h1>
     <div class="cta-container">
       <a class="booking-button" href="/booking">Időpont <br> foglalás</a>
       <img src="../assets/scissors.svg" alt="">

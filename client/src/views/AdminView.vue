@@ -19,8 +19,8 @@
                     <td>{{ booking.time }}</td>
                     <td>{{ booking.hour }}</td>
                     <td>
-                        <button @click="deleteBooking(booking.id)">Delete</button>
-                        <button @click="editBooking(booking)">Edit</button>
+                        <button class="delete-booking-button" @click="deleteBooking(booking.id)"></button>
+                        <button class="edit-booking-button" @click="editBooking(booking)"></button>
                     </td>
                 </tr>
             </tbody>
@@ -55,7 +55,7 @@ export default {
         };
     },
     created() {
-        this.fetchBookings();
+        setInterval(this.fetchBookings, 5000);
     },
     methods: {
         // Fetch all bookings from the backend
@@ -135,5 +135,33 @@ export default {
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 10;
+}
+
+table {
+    background-color: red;
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+    font-weight: bold;
+}
+
+table tbody {
+    text-align: center;
+}
+
+.delete-booking-button,
+.edit-booking-button {
+    padding: 1rem;
+    margin: 0 1rem;
+}
+
+.delete-booking-button::after {
+    content: "Torol"
+}
+
+.edit-booking-button::after {
+    content: "Modosit"
 }
 </style>
