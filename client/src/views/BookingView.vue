@@ -37,11 +37,11 @@
 
             <!-- Hour Picker Step -->
             <div v-if="formData.name && step === 3">
-                <input type="time" name="hour" id="hour" v-model="formData.hour" required :min="minHour"
+                <input type="time" name="hour" id="hour" step="60" v-model="formData.hour" required :min="minHour"
                     :max="maxHour" /> <br>
                 <div class="buttons">
                     <button class="reset-button" @click.prevent="resetForm"></button> <!-- Reset the form -->
-                    <button class="back-button " @click.prevent="goToPreviousStep">Visszalepes</button>
+                    <button class="back-button " @click.prevent="goToPreviousStep">Vissza</button>
                     <!-- Go back to the previous step -->
                     <button class="next-button" :disabled="!formData.hour" @click.prevent="goToNextStep"></button>
                 </div>
@@ -85,7 +85,7 @@ export default {
                 case 3:
                     return 'Pontosan mikor?';
                 case 4:
-                    return 'Osszesites Elfogadasa.';
+                    return 'Osszesites elfogadasa.';
                 default:
                     return '';
             }
@@ -95,7 +95,6 @@ export default {
         async onDateChange() {
             try {
                 const datePicker = document.getElementById("time");
-                console.log(datePicker)
                 this.formData.hour = ''; // Reset the selected hour
                 if (!this.formData.time) {
                     this.availableHours = []; // Clear hours if no date is selected
@@ -137,6 +136,7 @@ export default {
             });
             if (response.ok) {
                 this.resetForm();
+                alert("Booking successfully created.")
                 // setTimeout(() => window.location.href = "/", 2000)
             } else {
                 alert('Error submitting booking. Please try again.');

@@ -2,7 +2,6 @@
 import VideoBackground from '../components/video-background/index.vue';
 import LocationMap from '../components/map/index.vue';
 import Portfolio from '../components/portfolio/index.vue';
-console.log(LocationMap)
 </script>
 
 <template>
@@ -17,13 +16,12 @@ console.log(LocationMap)
     <LocationMap />
     <img class="scissors-big" src="../assets/scissors.svg" alt="">
     <Portfolio />
-    <p class="copyright">© 2025 Classic Cuts Barber Shop. Minden jog fenntartva.Stílus és precizitás – generációkon át.
-    </p>
+    <p class="copyright">© 2025 Figaro Barber Shop. Minden jog fenntartva.</p>
   </div>
 </template>
 
 <style scoped>
-.container {
+div.container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -59,19 +57,19 @@ p.copyright {
 
 }
 
-.cta-container {
+div.cta-container {
   display: grid;
   grid: auto / auto;
   justify-content: center;
   padding: 2rem 0;
 }
 
-.cta-container *:not(img, p) {
+div.cta-container *:not(img, p) {
   padding: 1rem 4rem;
   box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A;
 }
 
-.cta-container * {
+div.cta-container * {
   font-size: 6vw;
   text-align: center;
   margin: 0 auto;
@@ -79,22 +77,23 @@ p.copyright {
   text-transform: uppercase;
 }
 
-.buttons {
+div.buttons {
   place-items: center;
   list-style: none;
 }
 
-.booking-button {
+a.booking-button {
   color: #E6BE8A;
-  box-shadow: inset 1px 1px 0 ivory, inset -1px -1px 0 ivory;
+  box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A;
 }
 
-.telephone-button {
+a.telephone-button {
   mix-blend-mode: normal;
-  box-shadow: inset 1px 1px 0 ivory, inset -1px -1px 0 ivory !important;
+  color: #E6BE8A;
+  box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A !important;
 }
 
-.telephone-button:hover {
+a.telephone-button:hover {
   /* color: #E6BE8A; */
   /* box-shadow: inset 1px 1px 0 #E6BE8A, inset -1px -1px 0 #E6BE8A; */
 }

@@ -4,9 +4,9 @@
 <template>
   <header>
     <div class="wrapper">
-      <!-- <div class="logo">
+      <div class="logo">
         <img src="./assets/logo.svg" alt="">
-      </div> -->
+      </div>
     </div>
   </header>
   <RouterView />
@@ -36,21 +36,6 @@ header {
 .logo img {
   scale: 420%;
 }
-
-/* .logo::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: red;
-  z-index: 1000;
-  background-color: red;
-  width: 100%;
-  height: 100%;
-  mix-blend-mode: screen;
-  z-index: 1;
-  display: none;
-} */
 
 @media screen and (max-width: 700px) {
   .logo {
