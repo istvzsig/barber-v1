@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Foglalas Kezelo</h1>
+        <h1>Booking Manager</h1>
         <div v-if="bookings.length === 0">
             <p>No bookings available.</p>
         </div>
@@ -19,8 +19,8 @@
                     <td>{{ booking.time }}</td>
                     <td>{{ booking.hour }}</td>
                     <td>
-                        <button class="delete-booking-button" @click="deleteBooking(booking.id)"></button>
-                        <button class="edit-booking-button" @click="editBooking(booking)"></button>
+                        <button class="edit-booking-button" @click="editBooking(booking)">Edit</button>
+                        <button class="delete-booking-button" @click="deleteBooking(booking.id)">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -55,12 +55,14 @@ export default {
         };
     },
     created() {
+        this.fetchBookings(); // Initial load
         setInterval(this.fetchBookings, 5000);
     },
     methods: {
         // Fetch all bookings from the backend
         async fetchBookings() {
             try {
+                // TODO: Update enpoint for production
                 const response = await fetch('http://localhost:3000/bookings');
                 if (!response.ok) {
                     throw new Error('Failed to fetch bookings');
@@ -74,6 +76,7 @@ export default {
         // Handle the deletion of a booking
         async deleteBooking(id) {
             try {
+                // TODO: Update enpoint for production
                 const response = await fetch(`http://localhost:3000/bookings/${id}`, {
                     method: 'DELETE',
                 });
@@ -96,6 +99,7 @@ export default {
         // Submit the edited booking
         async submitEditBooking() {
             try {
+                // TODO: Update enpoint for production
                 const response = await fetch(`http://localhost:3000/bookings/${this.editingBooking.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -124,7 +128,6 @@ export default {
 </script>
 
 <style scoped>
-/* Style the modal */
 .modal {
     position: fixed;
     top: 50%;
@@ -138,8 +141,8 @@ export default {
 }
 
 table {
-    background-color: red;
     width: 100%;
+    padding-top: 100px;
 }
 
 table th {
@@ -155,13 +158,5 @@ table tbody {
 .edit-booking-button {
     padding: 1rem;
     margin: 0 1rem;
-}
-
-.delete-booking-button::after {
-    content: "Torol"
-}
-
-.edit-booking-button::after {
-    content: "Modosit"
 }
 </style>
