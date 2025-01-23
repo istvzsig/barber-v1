@@ -1,60 +1,47 @@
-<script setup>
-
-</script>
-
 <template>
     <div>
         <div class="bg-image"></div>
-        <!-- Dynamic Heading -->
-        <h1>Üdvözöl a <br />Broo's Barber</h1>
+        <h1>Welcome to <br />Broo's Barber</h1>
         <p>
-            Az online időpontfoglalás egy egyszerű és kényelmes módja annak, hogy biztosítsd a helyed a fodrászatban,
-            anélkül hogy telefonálnod kellene vagy személyesen keresnéd fel a szalont.
+            Online appointment booking is a simple and convenient way to secure your spot in our salon without having to
+            call or visit the salon in person.
         </p>
         <form id="bookingForm" @submit.prevent="submitForm">
-            <h1>Foglalj időpontot</h1>
+            <h1>Reserve your seat</h1>
             <p class="step-heading">{{ stepHeading }}</p>
             <div v-if="step === 1">
-                <input placeholder="Ird be a neved..." type="text" name="name" id="name" v-model="formData.name"
-                    required autofocus>
+                <input placeholder="Enter a name..." type="text" name="name" id="name" v-model="formData.name" required
+                    autofocus>
                 <br>
                 <div class="buttons">
-                    <button class="next-button" :disabled="formData.name.length < 5"
-                        @click.prevent="goToNextStep"></button>
+                    <button class="next-button" :disabled="!formData.name" @click.prevent="goToNextStep">Next</button>
                 </div>
             </div>
-
-            <!-- Show Date Picker only if Name is filled -->
             <div v-if="formData.name && step === 2">
                 <input type="date" name="time" id="time" v-model="formData.time" required autofocus :min="minDate"
                     :max="maxDate" @change="onDateChange" />
                 <br>
                 <div class="buttons">
-                    <button class="reset-button" @click.prevent="resetForm"></button> <!-- Reset the form -->
-                    <button class="next-button" :disabled="!formData.time" @click.prevent="goToNextStep"></button>
+                    <button class="reset-button" @click.prevent="resetForm">Reset</button>
+                    <button class="next-button" :disabled="!formData.time" @click.prevent="goToNextStep">Next</button>
                 </div>
             </div>
-
-            <!-- Hour Picker Step -->
             <div v-if="formData.name && step === 3">
                 <input type="time" name="hour" id="hour" step="60" v-model="formData.hour" required :min="minHour"
                     :max="maxHour" /> <br>
                 <div class="buttons">
-                    <button class="reset-button" @click.prevent="resetForm"></button> <!-- Reset the form -->
-                    <button class="back-button " @click.prevent="goToPreviousStep">Vissza</button>
-                    <!-- Go back to the previous step -->
-                    <button class="next-button" :disabled="!formData.hour" @click.prevent="goToNextStep"></button>
+                    <button class="reset-button" @click.prevent="resetForm">Reset</button>
+                    <button class="back-button " @click.prevent="goToPreviousStep">Back</button>
+                    <button class="next-button" :disabled="!formData.hour" @click.prevent="goToNextStep">Next</button>
                 </div>
             </div>
-
-            <!-- Confirmation Step -->
             <div v-if="formData.name && step === 4">
                 <p>Name: {{ formData.name }}</p>
                 <p>Date: {{ formData.time }}</p>
-                <p>Hour: {{ formData.hour }}</p> <!-- Format the hour properly -->
+                <p>Hour: {{ formData.hour }}</p>
                 <div class="buttons">
-                    <button class="reset-button" @click.prevent="resetForm"></button> <!-- Reset the form -->
-                    <button type="submit" @click.prevent="submitForm">Submit</button> <!-- Submit form here -->
+                    <button class="reset-button" @click.prevent="resetForm">Reset</button>
+                    <button type="submit" @click.prevent="submitForm">Submit</button>
                 </div>
             </div>
         </form>
@@ -79,13 +66,13 @@ export default {
         stepHeading() {
             switch (this.step) {
                 case 1:
-                    return 'Van benceneved?';
+                    return 'What is your nickname?';
                 case 2:
-                    return 'Melyik napon jönnel?';
+                    return 'Which day you will show up?';
                 case 3:
-                    return 'Pontosan mikor?';
+                    return 'What is your preferred time?';
                 case 4:
-                    return 'Osszesites elfogadasa.';
+                    return 'Booking summary';
                 default:
                     return '';
             }
@@ -95,25 +82,21 @@ export default {
         async onDateChange() {
             try {
                 const datePicker = document.getElementById("time");
-                this.formData.hour = ''; // Reset the selected hour
+                this.formData.hour = '';
                 if (!this.formData.time) {
-                    this.availableHours = []; // Clear hours if no date is selected
+                    this.availableHours = [];
                     return;
                 }
                 const response = await fetch(`/api/available-hours?date=${this.formData.time}`);
-
-                // Check for a non-200 response
                 if (!response.ok) {
                     throw new Error(`Failed to fetch available hours: ${response.statusText}`);
                 }
-
-                // Attempt to parse JSON
                 const data = await response.json();
                 console.log("Available hours fetched:", data.hours);
                 this.availableHours = data.hours;
             } catch (error) {
                 console.error("Error in onDateChange:", error);
-                this.availableHours = []; // Reset on error
+                this.availableHours = [];
             }
         }
         ,
@@ -135,9 +118,9 @@ export default {
                 body: JSON.stringify(this.formData),
             });
             if (response.ok) {
+                // TODO: Handle if booking was successful
                 this.resetForm();
                 alert("Booking successfully created.")
-                // setTimeout(() => window.location.href = "/", 2000)
             } else {
                 alert('Error submitting booking. Please try again.');
             }
@@ -145,9 +128,7 @@ export default {
     },
 };
 </script>
-
 <style scoped>
-/* Styles for calendar */
 * {
     color: ivory;
 }
@@ -160,25 +141,24 @@ form {
     text-align: center;
 }
 
-.calendar-container {
+div.calendar-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
     color: ivory;
-    /* border: 1px solid #ccc; */
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
     background-color: black;
 }
 
-.calendar-header {
+div.calendar-header {
     font-size: 1.2em;
     margin-bottom: 10px;
 }
 
-.calendar-grid {
+div.calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
@@ -338,7 +318,7 @@ input::cue-region {
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color: rgba(31, 31, 31, 0.772);
+    background-color: rgba(31, 31, 31, 70%);
     backdrop-filter: blur(3px);
 }
 
@@ -358,15 +338,6 @@ input::cue-region {
     box-shadow: none !important;
 }
 
-.reset-button::after,
-.next-button::after {
-    content: "Újrakezdés";
-}
-
-.next-button::after {
-    content: "Következő";
-}
-
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
@@ -376,19 +347,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 @media screen and (max-width: 650px) {
     form {
         padding: 1rem;
+        width: 100%;
+        margin-left: 0
     }
 
+    /* 
     .calendar-container {
         position: fixed;
         top: 0;
-    }
+    } */
 
     button {
         font-size: 12px !important;
     }
 
     input {
-        font-size: 12px !important;
+        font-size: 16px !important;
         margin-left: 0;
     }
 
@@ -399,26 +373,5 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     .reset-button::after {
         content: "Újra";
     }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-        /* background-color: red; */
-    }
-
-    /* ::-webkit-datetime-edit
-    ::-webkit-datetime-edit-fields-wrapper
-    ::-webkit-datetime-edit-text
-
-    ::-webkit-datetime-edit-year-field
-    ::-webkit-datetime-edit-month-field
-    ::-webkit-datetime-edit-week-field
-    ::-webkit-datetime-edit-day-field
-    ::-webkit-datetime-edit-hour-field
-    ::-webkit-datetime-edit-minute-field
-    ::-webkit-datetime-edit-second-field
-    ::-webkit-datetime-edit-millisecond-field
-    ::-webkit-datetime-edit-ampm-field
-
-    ::-webkit-inner-spin-button
-    ::-webkit-calendar-picker-indicator */
 }
 </style>
