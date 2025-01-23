@@ -5,7 +5,7 @@
   <header>
     <div class="wrapper">
       <div class="logo">
-        <img src="./assets/logo.svg" alt="">
+        <img src="./assets/yourlogo.svg" alt="">
       </div>
     </div>
   </header>
@@ -26,7 +26,6 @@ header {
 }
 
 .logo {
-  position: relative;
   top: 50px;
   text-align: center;
   mix-blend-mode: screen;
