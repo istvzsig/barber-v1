@@ -36,7 +36,6 @@ h1 {
   color: ivory;
   text-transform: uppercase;
   text-align: center;
-  padding: 2rem 0;
   letter-spacing: 5px;
 }
 
